@@ -10,7 +10,7 @@ pacman:: p_load(tidylog, dplyr, readr, writexl, ggplot2,
                 tidyr, purrr)
 
 # Paths
-root     <- "C:/Users/vitor/Dropbox (Personal)/Sao Tome e Principe/2022/TEACH_STP/"
+root     <- "C:/Users/vitor/Dropbox (Personal)/Sao Tome e Principe/2022/TEACH_STP3/"
 input    <- paste0(root, "input/")
 output   <- paste0(root, "output/")
 tmp      <- paste0(root, "tmp/")
