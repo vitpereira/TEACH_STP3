@@ -27,6 +27,9 @@ teach_limpo <- readRDS(paste0(tmp, "teach_limpo.RData"))
 ### Todos os graficos ###
 
 
+# Primeiro vou fazer apenas um grafico isoladamente para mostrar como faze-lo.
+# Depois vou fazer todos automatcamente através de uma função
+
 teach_limpo$a1_apoio_aprend_1_f <- 
   factor(teach_limpo$a1_apoio_aprend_1, 
               levels=c("A: Alta",
@@ -54,6 +57,8 @@ grafico1
 
 my_plots <- function(variable, titulo) {
 
+# Observe como a variável entrou aqui:!! rlang::sym(variable)
+
   teach_limpo %>% 
     ggplot(aes(x= !! rlang::sym(variable), 
            fill= !! rlang::sym(variable))) +
@@ -66,7 +71,8 @@ my_plots <- function(variable, titulo) {
     theme(legend.position = "bottom") +
     xlab("") +
     ylab("Contagem") +
-    labs(title= titulo)
+# Observe que titulo entrou normalmente
+        labs(title= titulo)
 }
 
 titulo <- c(	
@@ -137,18 +143,31 @@ map2(vetor, titulo, ~my_plots( variable=.x, titulo=.y))
 # Calcula as médias por construto
 
 # O across roda interativamente para cada variável do vetor
+
+#################
 teach_limpo2 <-
   teach_limpo %>% 
   mutate(across(c(a1_apoio_aprend_1:a3_cap_soc_colab_3), 
+
+# observe que precisamos colocar o ~ antes do case_when
+              
        ~case_when(      .  ==  "A: Alta"   ~ "1",
                         .  ==  "M: Médio"  ~ "3",
                         .  ==  "B: Baixo"  ~ "5")))
+######################
 
 # Transforma as colunas que só possuem numeros para formato numerico
+# Esse pedacinho de c[odigo eu tirei das  nossas primeiras aulas, 
+# quando fizemos o bind_rows de 2 bases
 teach_limpo3 <- readr::type_convert(teach_limpo2) 
 
-# aplica o rowMeans para tirar a media dos construtos
+
+#####################
+# Aplica o rowMeans para tirar a media dos construtos
+
 teach_limpo4 <- teach_limpo3 %>% 
+  
+# Observe o across aqui, que me permite fazer o rowMeans para várias colunas 
   mutate(apoio_aprend = rowMeans(across(c(a1_apoio_aprend_1:a1_apoio_aprend_4))  , na.rm=TRUE), 
          expec_pos    = rowMeans(across(c(a1_expect_posit_1:a1_expect_posit_3))  , na.rm=TRUE),
          clar_licao   = rowMeans(across(c(a2_licao_clara_1:	a2_licao_clara_4))   , na.rm=TRUE),
@@ -163,8 +182,8 @@ teach_limpo4 <- teach_limpo3 %>%
             instrucao         = rowMeans(across(c(clar_licao:rac_critico)) , na.rm=TRUE),
             socio_emoc        = rowMeans(across(c(autonomia:capac_soc_col)), na.rm=TRUE) )
 
+#######################
 
-################
 # Media geral
 medias_constr_geral <- teach_limpo4 %>% 
     summarise(
@@ -182,13 +201,11 @@ medias_constr_geral <- teach_limpo4 %>%
     mean_socio_emoc        		   = mean(socio_emoc          , na.rm=TRUE) )
 
 
+#########################
 # Grafico das médias gerais
 
-grafico_construtos <- medias_constr_geral <-
-  ggplot(x=)
-
-
-
+#grafico_construtos <- medias_constr_geral <-
+#  ggplot(x=)
 
 
 #################
