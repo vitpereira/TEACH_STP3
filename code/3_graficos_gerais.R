@@ -47,7 +47,15 @@ medias_constr_geral <- teach_limpo4 %>%
 #########################
 # Grafico das médias gerais
 
-teach_transposto_medias <- as.data.frame(t(medias_constr_geral))
+teach_transposto_medias <- as.data.frame(t
+                            (medias_constr_geral))
+
+v<-c(seq(1:12))
+
+teach_junto <- cbind(teach_transposto_medias, v) 
+
+
+
 
 #grafico_construtos <- medias_constr_geral <-
 #  ggplot(x=)
