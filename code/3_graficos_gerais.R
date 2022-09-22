@@ -22,7 +22,7 @@ Sys.setenv(TZ="UCT")
 
 ######################################
 
-teach_limpo <- readRDS(paste0(tmp, "teach_construtos.RData"))
+teach_limpo4 <- readRDS(paste0(tmp, "teach_construtos.RData"))
 
 
 #######################
@@ -46,6 +46,8 @@ medias_constr_geral <- teach_limpo4 %>%
 
 #########################
 # Grafico das médias gerais
+
+teach_transposto_medias <- as.data.frame(t(medias_constr_geral))
 
 #grafico_construtos <- medias_constr_geral <-
 #  ggplot(x=)
